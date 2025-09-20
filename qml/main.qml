@@ -11,7 +11,7 @@ Window {
     visible: true
     title: "QML C++ Template"
 
-    property string currentTheme: uiBackend ? uiBackend.getTheme() : "light"
+    property string currentTheme: "light"
 
     onCurrentThemeChanged: {
         if (currentTheme === "dark") {
@@ -24,7 +24,7 @@ Window {
     }
 
     Connections {
-        target: uiBackend
+        target: appViewModel
         function onThemeChanged(theme) {
             window.currentTheme = theme
         }
@@ -40,11 +40,14 @@ Window {
         initialItem: mainPage
     }
 
-    Component {
+    Loader {
         id: mainPage
-        MainPage {
-            onThemeToggleRequested: {
-                uiBackend.setTheme(currentTheme === "light" ? "dark" : "light")
+        source: "qrc:/qml/pages/MainPage.qml"
+        onLoaded: {
+            if (item && item.themeToggleRequested) {
+                item.themeToggleRequested.connect(function() {
+                    window.currentTheme = currentTheme === "light" ? "dark" : "light"
+                })
             }
         }
     }

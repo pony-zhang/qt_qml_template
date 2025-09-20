@@ -3,18 +3,17 @@
 #include <QCoreApplication>
 #include <QDir>
 
-Q_LOGGING_CATEGORY(appCore, "app.core")
 
 Application::Application(QObject *parent)
     : QObject(parent)
     , m_settings(new QSettings(this))
 {
-    qCDebug(appCore) << "Application initialized";
+    qDebug() << "Application initialized";
 }
 
 Application::~Application()
 {
-    qCDebug(appCore) << "Application destroyed";
+    qDebug() << "Application destroyed";
 }
 
 QString Application::version() const

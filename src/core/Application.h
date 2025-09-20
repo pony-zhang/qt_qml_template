@@ -5,8 +5,6 @@
 #include <QLoggingCategory>
 #include <QVariantMap>
 
-Q_DECLARE_LOGGING_CATEGORY(appCore)
-
 class Application : public QObject
 {
     Q_OBJECT

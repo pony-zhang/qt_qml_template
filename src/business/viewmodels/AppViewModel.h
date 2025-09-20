@@ -4,16 +4,16 @@
 #include <QQmlEngine>
 #include <QLoggingCategory>
 
-Q_DECLARE_LOGGING_CATEGORY(appUiBackend)
+Q_DECLARE_LOGGING_CATEGORY(appViewModel)
 
-class UiBackend : public QObject
+class AppViewModel : public QObject
 {
     Q_OBJECT
     QML_ELEMENT
 
 public:
-    explicit UiBackend(QQmlEngine *engine, QObject *parent = nullptr);
-    ~UiBackend();
+    explicit AppViewModel(QObject *parent = nullptr);
+    ~AppViewModel();
 
     Q_INVOKABLE void showToast(const QString &message, int duration = 3000);
     Q_INVOKABLE void showNotification(const QString &title, const QString &message);
@@ -26,6 +26,5 @@ signals:
     void notificationRequested(const QString &title, const QString &message);
 
 private:
-    QQmlEngine *m_engine;
     QString m_currentTheme;
 };

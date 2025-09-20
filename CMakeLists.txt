@@ -2,10 +2,12 @@ cmake_minimum_required(VERSION 3.21)
 
 project(QmlCppTemplate VERSION 1.0.0 LANGUAGES CXX)
 
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Set CMake policies
 if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.18)
     cmake_policy(SET CMP0094 NEW)
 endif()
@@ -14,15 +16,11 @@ if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.15)
     cmake_policy(SET CMP0087 NEW)
 endif()
 
-find_package(Qt6 REQUIRED COMPONENTS Core Quick QuickControls2 Widgets)
-
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_standard_project_setup()
-endif()
+# Include cmake modules
+include(cmake/BuildOptions.cmake)
+include(cmake/PlatformConfig.cmake)
+include(cmake/Dependencies.cmake)
+include(cmake/BuildPresets.cmake)
 
 # Add subdirectories for modular build
 add_subdirectory(src)
@@ -32,8 +30,17 @@ add_subdirectory(dependencies)
 # Create executable
 add_executable(${PROJECT_NAME}
     src/main.cpp
+    qml/qml.qrc
 )
 
+# Configure build info
+configure_build_info(${PROJECT_NAME})
+
+# Set up warnings and features
+set_project_warnings(${PROJECT_NAME})
+set_project_features(${PROJECT_NAME})
+
+# Link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE
     app_sources
     third_party
@@ -43,33 +50,46 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Widgets
 )
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    WIN32_EXECUTABLE ON
-    MACOSX_BUNDLE ON
-    MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Info.plist.in"
-)
-
+# Set platform-specific properties
 if(WIN32)
     set_target_properties(${PROJECT_NAME} PROPERTIES
         WIN32_EXECUTABLE TRUE
         LINK_FLAGS "/ENTRY:mainCRTStartup"
     )
-endif()
-
-if(UNIX AND NOT APPLE)
-    install(TARGETS ${PROJECT_NAME}
-        RUNTIME DESTINATION bin
+elseif(APPLE)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        MACOSX_BUNDLE OFF
     )
 endif()
 
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file(
-    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY SameMajorVersion
-)
+# Include packaging configuration
+include(cmake/Packaging.cmake)
 
+# Enable testing
+option(BUILD_TESTING "Build tests" OFF)
 if(BUILD_TESTING)
     enable_testing()
     add_subdirectory(tests)
 endif()
+
+# Enable examples
+option(BUILD_EXAMPLES "Build examples" OFF)
+if(BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
+
+# Enable installation
+option(ENABLE_INSTALL "Enable installation targets" ON)
+if(ENABLE_INSTALL)
+    # Installation targets are handled in Packaging.cmake
+endif()
+
+# Print build configuration
+message(STATUS "Build configuration:")
+message(STATUS "  Build type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "  C++ compiler: ${CMAKE_CXX_COMPILER}")
+message(STATUS "  C++ standard: ${CMAKE_CXX_STANDARD}")
+message(STATUS "  Install prefix: ${CMAKE_INSTALL_PREFIX}")
+message(STATUS "  Build testing: ${BUILD_TESTING}")
+message(STATUS "  Build examples: ${BUILD_EXAMPLES}")
+message(STATUS "  Enable install: ${ENABLE_INSTALL}")

@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/qml">
         <file>main.qml</file>
-        <file>qmldir</file>
         <file>components/Card.qml</file>
         <file>pages/MainPage.qml</file>
         <file>theme/Theme.qml</file>

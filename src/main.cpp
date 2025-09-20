@@ -6,8 +6,9 @@
 #include <QVariantMap>
 
 #include "core/Application.h"
-#include "ui/backend/UiBackend.h"
-#include "models/DataModel.h"
+#include "business/viewmodels/AppViewModel.h"
+#include "business/viewmodels/DataViewModel.h"
+#include "data/models/DataModel.h"
 #include "plugin/PluginLoader.h"
 
 Q_LOGGING_CATEGORY(appMain, "app.main")
@@ -34,11 +35,11 @@ int main(int argc, char *argv[])
 
         QQmlApplicationEngine engine;
 
-        UiBackend uiBackend(&engine);
-        engine.rootContext()->setContextProperty("uiBackend", &uiBackend);
+        AppViewModel appViewModel;
+        engine.rootContext()->setContextProperty("appViewModel", &appViewModel);
 
-        DataModel dataModel;
-        engine.rootContext()->setContextProperty("dataModel", &dataModel);
+        DataViewModel dataViewModel;
+        engine.rootContext()->setContextProperty("dataViewModel", &dataViewModel);
 
         engine.addImportPath(QStringLiteral("qrc:/"));
 

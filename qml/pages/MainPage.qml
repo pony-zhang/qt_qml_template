@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Layouts
+import "../components"
 
 Page {
     id: root
@@ -26,14 +27,14 @@ Page {
 
             ToolButton {
                 icon.name: "view-refresh"
-                onClicked: dataModel.clear()
+                onClicked: dataViewModel.model.clear()
                 ToolTip.visible: hovered
                 ToolTip.text: "Clear all items"
             }
 
             ToolButton {
                 icon.name: "document-new"
-                onClicked: dataModel.addItem("New Item", "Description", 0)
+                onClicked: dataViewModel.model.addItem("New Item", "Description", 0)
                 ToolTip.visible: hovered
                 ToolTip.text: "Add new item"
             }
@@ -57,7 +58,7 @@ Page {
             Layout.fillWidth: true
 
             Label {
-                text: "Total Items: " + dataModel.getCount()
+                text: "Total Items: " + dataViewModel.model.getCount()
                 font.pixelSize: 16
                 font.bold: true
             }
@@ -69,9 +70,9 @@ Page {
             Button {
                 text: "Add Sample Data"
                 onClicked: {
-                    dataModel.addItem("Project Alpha", "First test project", 100)
-                    dataModel.addItem("Project Beta", "Second test project", 250)
-                    dataModel.addItem("Project Gamma", "Third test project", 150)
+                    dataViewModel.model.addItem("Project Alpha", "First test project", 100)
+                    dataViewModel.model.addItem("Project Beta", "Second test project", 250)
+                    dataViewModel.model.addItem("Project Gamma", "Third test project", 150)
                 }
             }
         }
@@ -82,7 +83,7 @@ Page {
 
             ListView {
                 id: listView
-                model: dataModel
+                model: dataViewModel.model
                 spacing: 10
                 clip: true
 
@@ -132,7 +133,7 @@ Page {
                                     Switch {
                                         checked: enabled
                                         onToggled: {
-                                            dataModel.setItemEnabled(id, checked)
+                                            dataViewModel.model.setItemEnabled(id, checked)
                                         }
                                     }
                                 }
@@ -144,7 +145,7 @@ Page {
                                 Button {
                                     text: "+"
                                     onClicked: {
-                                        dataModel.updateItemValue(id, value + 10)
+                                        dataViewModel.model.updateItemValue(id, value + 10)
                                     }
                                 }
 
@@ -152,7 +153,7 @@ Page {
                                     text: "-"
                                     onClicked: {
                                         if (value > 0) {
-                                            dataModel.updateItemValue(id, value - 10)
+                                            dataViewModel.model.updateItemValue(id, value - 10)
                                         }
                                     }
                                 }
@@ -161,7 +162,7 @@ Page {
                                     text: "Remove"
                                     Material.background: Material.Red
                                     onClicked: {
-                                        dataModel.removeItem(id)
+                                        dataViewModel.model.removeItem(id)
                                     }
                                 }
                             }

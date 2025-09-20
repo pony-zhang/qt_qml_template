@@ -6,7 +6,7 @@
     Q_LOGGING_CATEGORY(name, name)
 
 #define LOG_DEBUG() \
-    qCDebug(SmartLogPlugin::autoDetectCategory(__FILE__).toUtf8().constData())
+    qDebug(SmartLogPlugin::autoDetectCategory(__FILE__).toUtf8().constData())
 
 #define LOG_INFO() \
     qCInfo(SmartLogPlugin::autoDetectCategory(__FILE__).toUtf8().constData())

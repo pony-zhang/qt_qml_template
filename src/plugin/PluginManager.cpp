@@ -4,9 +4,6 @@
 #include <QFileInfo>
 #include <QLoggingCategory>
 
-Q_DECLARE_LOGGING_CATEGORY(pluginManager)
-Q_LOGGING_CATEGORY(pluginManager, "plugin.manager")
-
 PluginManager* PluginManager::s_instance = nullptr;
 
 PluginManager* PluginManager::instance()
@@ -37,7 +34,7 @@ bool PluginManager::loadPlugins(const QString &pluginDir)
 
     QDir dir(m_pluginDir);
     if (!dir.exists()) {
-        qCDebug(pluginManager) << "Plugin directory does not exist:" << m_pluginDir;
+        qDebug() << "Plugin directory does not exist:" << m_pluginDir;
         return false;
     }
 
@@ -62,7 +59,7 @@ bool PluginManager::loadPlugin(const QString &pluginPath)
 {
     QPluginLoader *loader = new QPluginLoader(pluginPath, this);
     if (!loader->load()) {
-        qCWarning(pluginManager) << "Failed to load plugin:" << pluginPath
+        qWarning() << "Failed to load plugin:" << pluginPath
                                 << "Error:" << loader->errorString();
         emit pluginError(QFileInfo(pluginPath).baseName(), loader->errorString());
         delete loader;
@@ -71,7 +68,7 @@ bool PluginManager::loadPlugin(const QString &pluginPath)
 
     QObject *pluginObj = loader->instance();
     if (!pluginObj) {
-        qCWarning(pluginManager) << "Failed to get plugin instance:" << pluginPath
+        qWarning() << "Failed to get plugin instance:" << pluginPath
                                 << "Error:" << loader->errorString();
         emit pluginError(QFileInfo(pluginPath).baseName(), loader->errorString());
         loader->unload();
@@ -81,7 +78,7 @@ bool PluginManager::loadPlugin(const QString &pluginPath)
 
     IPlugin *plugin = qobject_cast<IPlugin*>(pluginObj);
     if (!plugin) {
-        qCWarning(pluginManager) << "Plugin does not implement IPlugin interface:" << pluginPath;
+        qWarning() << "Plugin does not implement IPlugin interface:" << pluginPath;
         emit pluginError(QFileInfo(pluginPath).baseName(), "Invalid plugin interface");
         loader->unload();
         delete loader;
@@ -90,7 +87,7 @@ bool PluginManager::loadPlugin(const QString &pluginPath)
 
     QString pluginName = plugin->name();
     if (m_plugins.contains(pluginName)) {
-        qCWarning(pluginManager) << "Plugin already loaded:" << pluginName;
+        qWarning() << "Plugin already loaded:" << pluginName;
         emit pluginError(pluginName, "Plugin already loaded");
         loader->unload();
         delete loader;
@@ -100,7 +97,7 @@ bool PluginManager::loadPlugin(const QString &pluginPath)
     m_plugins[pluginName] = plugin;
     m_loaders[pluginName] = loader;
 
-    qCDebug(pluginManager) << "Plugin loaded successfully:" << pluginName;
+    qDebug() << "Plugin loaded successfully:" << pluginName;
     emit pluginLoaded(pluginName);
 
     return true;
@@ -109,7 +106,7 @@ bool PluginManager::loadPlugin(const QString &pluginPath)
 bool PluginManager::unloadPlugin(const QString &pluginName)
 {
     if (!m_plugins.contains(pluginName)) {
-        qCWarning(pluginManager) << "Plugin not loaded:" << pluginName;
+        qWarning() << "Plugin not loaded:" << pluginName;
         return false;
     }
 
@@ -119,7 +116,7 @@ bool PluginManager::unloadPlugin(const QString &pluginName)
     plugin->shutdown();
 
     if (!loader->unload()) {
-        qCWarning(pluginManager) << "Failed to unload plugin:" << pluginName
+        qWarning() << "Failed to unload plugin:" << pluginName
                                 << "Error:" << loader->errorString();
         return false;
     }
@@ -127,7 +124,7 @@ bool PluginManager::unloadPlugin(const QString &pluginName)
     m_plugins.remove(pluginName);
     m_loaders.remove(pluginName);
 
-    qCDebug(pluginManager) << "Plugin unloaded successfully:" << pluginName;
+    qDebug() << "Plugin unloaded successfully:" << pluginName;
     emit pluginUnloaded(pluginName);
 
     return true;
@@ -174,16 +171,16 @@ bool PluginManager::initializePlugin(const QString &name, const QVariantMap &con
 {
     IPlugin *plugin = m_plugins.value(name);
     if (!plugin) {
-        qCWarning(pluginManager) << "Plugin not found:" << name;
+        qWarning() << "Plugin not found:" << name;
         return false;
     }
 
     if (plugin->initialize(config)) {
-        qCDebug(pluginManager) << "Plugin initialized:" << name;
+        qDebug() << "Plugin initialized:" << name;
         emit pluginInitialized(name);
         return true;
     } else {
-        qCWarning(pluginManager) << "Failed to initialize plugin:" << name;
+        qWarning() << "Failed to initialize plugin:" << name;
         return false;
     }
 }

@@ -6,12 +6,12 @@ Q_LOGGING_CATEGORY(appModels, "app.models")
 DataModel::DataModel(QObject *parent)
     : QAbstractListModel(parent)
 {
-    qCDebug(appModels) << "DataModel initialized";
+    qDebug(appModels) << "DataModel initialized";
 }
 
 DataModel::~DataModel()
 {
-    qCDebug(appModels) << "DataModel destroyed";
+    qDebug(appModels) << "DataModel destroyed";
 }
 
 int DataModel::rowCount(const QModelIndex &parent) const
@@ -63,7 +63,7 @@ void DataModel::addItem(const QString &name, const QString &description, int val
     m_items.append({id, name, description, value, true});
     endInsertRows();
 
-    qCDebug(appModels) << "Added item:" << id << name;
+    qDebug(appModels) << "Added item:" << id << name;
 }
 
 void DataModel::removeItem(const QString &id)
@@ -73,7 +73,7 @@ void DataModel::removeItem(const QString &id)
         beginRemoveRows(QModelIndex(), index, index);
         m_items.removeAt(index);
         endRemoveRows();
-        qCDebug(appModels) << "Removed item:" << id;
+        qDebug(appModels) << "Removed item:" << id;
     }
 }
 
@@ -83,7 +83,7 @@ void DataModel::updateItemValue(const QString &id, int value)
     if (index >= 0) {
         m_items[index].value = value;
         emit dataChanged(createIndex(index, 0), createIndex(index, 0), {ValueRole});
-        qCDebug(appModels) << "Updated item value:" << id << value;
+        qDebug(appModels) << "Updated item value:" << id << value;
     }
 }
 
@@ -93,7 +93,7 @@ void DataModel::setItemEnabled(const QString &id, bool enabled)
     if (index >= 0) {
         m_items[index].enabled = enabled;
         emit dataChanged(createIndex(index, 0), createIndex(index, 0), {EnabledRole});
-        qCDebug(appModels) << "Set item enabled:" << id << enabled;
+        qDebug(appModels) << "Set item enabled:" << id << enabled;
     }
 }
 
@@ -102,7 +102,7 @@ void DataModel::clear()
     beginResetModel();
     m_items.clear();
     endResetModel();
-    qCDebug(appModels) << "Cleared all items";
+    qDebug(appModels) << "Cleared all items";
 }
 
 QJsonObject DataModel::getItem(const QString &id) const
