@@ -109,3 +109,17 @@ Uses Qt Test framework with tests in `tests/` directory:
 - Third-party libraries can be added to `dependencies/` directory with automatic CMake/QMake detection
 - Follow MVVM pattern: ViewModels in business layer, Models in data layer, Views in QML
 - Use dependency injection and interfaces for loose coupling between modules
+
+## Coding Standards and Preferences
+
+### Documentation
+- **README Synchronization**: When major modular functionality is added, removed, or modified, README files in first level directories must be updated accordingly
+- **README Index**: Main project README provides overview and navigation to module-specific documentation
+  - [README.md](README.md)
+  - [dependencies/README.md](dependencies/README.md)
+  - [src/README.md](src/README.md)
+  - [qml/README.md](qml/README.md)
+
+### Logging
+- **Disable `Q_DECLARE_LOGGING_CATEGORY()`**: Do not use Qt logging categories
+- **Use Qt's native output functions**: Use Qt's native output functions directly:

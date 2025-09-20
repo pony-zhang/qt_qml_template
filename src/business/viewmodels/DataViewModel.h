@@ -10,7 +10,7 @@ class DataViewModel : public QObject
 {
     Q_OBJECT
     QML_ELEMENT
-    Q_PROPERTY(DataModel* model READ model CONSTANT)
+    Q_PROPERTY(DataModel* model READ model NOTIFY modelChanged)
 
 public:
     explicit DataViewModel(QObject *parent = nullptr);
@@ -31,6 +31,7 @@ signals:
     void itemAdded(const QString &id);
     void itemRemoved(const QString &id);
     void itemUpdated(const QString &id);
+    void modelChanged();
 
 private:
     DataModel* m_model;

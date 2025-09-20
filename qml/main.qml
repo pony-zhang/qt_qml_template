@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Layouts
 import QtQuick.Window
+import com.example.app 1.0
 
 Window {
     id: window
@@ -21,6 +22,10 @@ Window {
             Material.theme = Material.Light
             Material.accent = Material.Blue
         }
+    }
+
+    AppViewModel {
+        id: appViewModel
     }
 
     Connections {

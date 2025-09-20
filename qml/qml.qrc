@@ -4,5 +4,6 @@
         <file>components/Card.qml</file>
         <file>pages/MainPage.qml</file>
         <file>theme/Theme.qml</file>
+        <file>js/Common.js</file>
     </qresource>
 </RCC>

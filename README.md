@@ -22,33 +22,40 @@ A modern Qt QML C++ template project following clean architecture and MVVM patte
 │   ├── pages/             # QML pages/screens
 │   ├── theme/             # Theme definitions
 │   ├── assets/            # Static assets (images, etc.)
-│   ├── main.qml           # Main application entry point
-│   └── qml.qrc            # QML resource configuration
+│   ├── js/                # JavaScript utilities and helpers
+│   └── main.qml           # Main application entry point
 ├── src/                   # C++ source code
 │   ├── core/              # Core application layer
-│   │   ├── Application.h/cpp    # Application lifecycle & plugin management
-│   │   └── CMakeLists.txt        # Core module build config
+│   │   ├── Application lifecycle and plugin management
+│   │   ├── QML type registration system
+│   │   ├── Resource management system
+│   │   └── Core module build configuration
 │   ├── business/          # Business logic layer
-│   │   ├── services/           # Pure business logic (DataService)
-│   │   ├── viewmodels/         # MVVM ViewModels (AppViewModel, DataViewModel)
-│   │   └── CMakeLists.txt        # Business module build config
+│   │   ├── Pure business logic services
+│   │   ├── MVVM ViewModels for QML integration
+│   │   └── Business module build configuration
 │   ├── data/              # Data layer
-│   │   ├── models/             # Pure data models (DataModel)
-│   │   ├── repositories/       # Data access layer (extensible)
-│   │   └── CMakeLists.txt        # Data module build config
-│   ├── presentation/       # Presentation layer
-│   │   ├── delegates/          # Simple UI delegates (moved from ui/backend)
-│   │   └── CMakeLists.txt        # Presentation module build config
+│   │   ├── Pure data models and entities
+│   │   ├── Data access and repositories
+│   │   └── Data module build configuration
 │   ├── plugin/            # Plugin system
-│   │   ├── IPlugin.h/BasePlugin.h   # Plugin interfaces
-│   │   ├── PluginManager.h/cpp     # Plugin management
-│   │   ├── log/SmartLogPlugin/      # Example plugin
-│   │   └── CMakeLists.txt          # Plugin module build config
-│   └── utils/             # Utility classes
+│   │   ├── Plugin interfaces and base implementations
+│   │   ├── Plugin management and loading
+│   │   ├── Smart logging plugin system with zero-overhead filtering
+│   │   └── Plugin module build configuration
+│   ├── utils/             # Utility classes
+│   ├── Main source build configuration
+│   └── Application entry point
+├── resources/             # Application resources
+│   ├── icons/             # Icon files and application assets
+│   ├── images/            # Image assets and graphics
+│   └── translation/       # Internationalization files
 ├── tests/                 # Unit and integration tests
-├── cmake/                 # CMake configuration files
-├── dependencies/          # Third-party libraries
-└── docs/                  # Documentation
+│   ├── unit/              # Unit tests for individual components
+│   └── integration/       # Integration tests for module interactions
+├── cmake/                 # CMake configuration files and templates
+├── dependencies/          # Third-party libraries and auto-discovery
+└── build/                 # Build directory (git ignored)
 ```
 
 ## Prerequisites

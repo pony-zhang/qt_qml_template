@@ -3,12 +3,17 @@ import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Layouts
 import "../components"
+import com.example.app 1.0
 
 Page {
     id: root
     title: "Main Page"
 
     signal themeToggleRequested()
+
+    DataViewModel {
+        id: dataViewModel
+    }
 
     header: ToolBar {
         RowLayout {

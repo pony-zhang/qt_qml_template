@@ -135,3 +135,4 @@ int DataModel::findItemIndex(const QString &id) const
     }
     return -1;
 }
+

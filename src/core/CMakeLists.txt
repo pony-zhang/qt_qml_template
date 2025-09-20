@@ -14,4 +14,5 @@ target_include_directories(core PUBLIC
 
 target_link_libraries(core PUBLIC
     Qt6::Core
+    Qt6::Qml
 )

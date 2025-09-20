@@ -6,12 +6,9 @@
 #include <QVariantMap>
 
 #include "core/Application.h"
-#include "business/viewmodels/AppViewModel.h"
-#include "business/viewmodels/DataViewModel.h"
-#include "data/models/DataModel.h"
+#include "core/QmlTypeRegistry.h"
 #include "plugin/PluginLoader.h"
 
-Q_LOGGING_CATEGORY(appMain, "app.main")
 
 int main(int argc, char *argv[])
 {
@@ -35,11 +32,9 @@ int main(int argc, char *argv[])
 
         QQmlApplicationEngine engine;
 
-        AppViewModel appViewModel;
-        engine.rootContext()->setContextProperty("appViewModel", &appViewModel);
-
-        DataViewModel dataViewModel;
-        engine.rootContext()->setContextProperty("dataViewModel", &dataViewModel);
+        // Register QML types
+        auto* qmlRegistry = QmlTypeRegistry::instance();
+        qmlRegistry->registerAllTypes();
 
         engine.addImportPath(QStringLiteral("qrc:/"));
 
@@ -54,18 +49,18 @@ int main(int argc, char *argv[])
         engine.load(url);
 
         if (engine.rootObjects().isEmpty()) {
-            qCritical(appMain) << "Failed to load QML file";
+            qCritical() << "Failed to load QML file";
             return -1;
         }
 
         return app.exec();
     }
     catch (const std::exception& e) {
-        qCritical(appMain) << "Application error:" << e.what();
+        qCritical() << "Application error:" << e.what();
         return -1;
     }
     catch (...) {
-        qCritical(appMain) << "Unknown application error";
+        qCritical() << "Unknown application error";
         return -1;
     }
 }

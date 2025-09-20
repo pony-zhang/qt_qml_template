@@ -1,11 +1,15 @@
 #include "DataViewModel.h"
 
-
 DataViewModel::DataViewModel(QObject *parent)
     : QObject(parent)
-    , m_model(new DataModel(this))
+    , m_model(nullptr)
 {
-    qDebug() << "DataViewModel initialized";
+    if (!m_model) {
+        qWarning() << "Failed to get data model from ModelManager";
+        m_model = new DataModel(this);
+    }
+
+    qDebug() << "DataViewModel initialized with model:" << m_model;
 }
 
 DataViewModel::~DataViewModel()
