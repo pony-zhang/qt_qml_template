@@ -4,9 +4,6 @@
 #include <QLoggingCategory>
 #include <QDateTime>
 #include <QMetaType>
-
-Q_DECLARE_LOGGING_CATEGORY(appDataService)
-
 class DataService : public QObject
 {
     Q_OBJECT

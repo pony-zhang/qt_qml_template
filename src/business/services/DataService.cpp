@@ -3,17 +3,16 @@
 #include <QRegularExpression>
 #include <QVariant>
 
-Q_LOGGING_CATEGORY(appDataService, "app.dataservice")
 
 DataService::DataService(QObject *parent)
     : QObject(parent)
 {
-    qDebug(appDataService) << "DataService initialized";
+    qDebug() << "DataService initialized";
 }
 
 DataService::~DataService()
 {
-    qDebug(appDataService) << "DataService destroyed";
+    qDebug() << "DataService destroyed";
 }
 
 bool DataService::validateItemName(const QString &name) const
