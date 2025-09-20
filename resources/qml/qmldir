@@ -1,0 +1,10 @@
+module AppUiBackend
+singleton UiBackend 1.0 UiBackend.qml
+
+module AppComponents
+Button 1.0 Button.qml
+Card 1.0 Card.qml
+TextInput 1.0 TextInput.qml
+
+module AppTheme
+Theme 1.0 Theme.qml

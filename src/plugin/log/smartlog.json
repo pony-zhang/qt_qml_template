@@ -1,0 +1,18 @@
+{
+    "IID": "com.template.smartlog",
+    "MetaData": {
+        "name": "SmartLogPlugin",
+        "version": "1.0.0",
+        "description": "Intelligent logging system with automatic categorization and zero overhead filtering",
+        "author": "Logging System Team",
+        "features": [
+            "Automatic log categorization based on file path",
+            "Zero overhead filtering for disabled log levels",
+            "Structured log output (text and JSON formats)",
+            "Dynamic runtime control via environment variables",
+            "Thread-safe operation",
+            "File and console output support",
+            "Customizable formatting patterns"
+        ]
+    }
+}

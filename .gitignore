@@ -1,0 +1,74 @@
+# Build artifacts
+build/
+build-*/
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.app
+*.dmg
+*.deb
+*.rpm
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!cmake/
+!cmake/*.cmake
+!cmake/*.in
+
+# Qt
+*.qmlc
+*.jsc
+*.moc
+*_plugin_import.cpp
+*.qmlinterface
+*.prl
+*.la
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Dependencies
+node_modules/
+vendor/
+venv/
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+logs/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+.cache/

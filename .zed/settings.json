@@ -1,0 +1,22 @@
+{
+  "lsp": {
+    "clangd": {
+      "initialization_options": {
+        "compilationDatabasePath": "build",
+        "fallbackFlags": [
+          "-std=c++17",
+          "-I/opt/homebrew/include",
+          "-I/opt/homebrew/opt/qt/include",
+          "-I/opt/homebrew/opt/qt/lib/QtCore.framework/Headers",
+          "-I/opt/homebrew/opt/qt/lib/QtQuick.framework/Headers",
+          "-I/opt/homebrew/opt/qt/lib/QtWidgets.framework/Headers",
+          "-I/opt/homebrew/opt/qt/lib/QtQml.framework/Headers",
+          "-F/opt/homebrew/opt/qt/lib",
+          "-DQT_CORE_LIB",
+          "-DQT_QUICK_LIB",
+          "-DQT_WIDGETS_LIB"
+        ]
+      }
+    }
+  }
+}
